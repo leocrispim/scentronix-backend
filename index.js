@@ -1,11 +1,17 @@
-async function findServer() {
-    const axios = require('axios', 'AxiosResponse')
-    const mockList = require('./mock.json');
-    axios.defaults.timeout = 5000;
-    
-    let onlineServers = []
+const axios = require('axios', 'AxiosResponse')
+axios.defaults.timeout = 5000;
 
-    const results = await Promise.allSettled(mockList.map(item => fetchItem(item)))
+async function findServer() {
+    const mockList = require('./mock.json');
+
+    let onlineServerResult = {
+        url: "",
+        priority: Infinity
+    }
+
+    const promiseList = mockList.map(item => fetchItem(item))
+
+    await Promise.allSettled(promiseList)
 
     async function fetchItem(item) {
         url = item.url,
@@ -13,29 +19,20 @@ async function findServer() {
 
         return axios.get(`${url}`).then((response) => {
             if (response.status >= 200 && response.status < 300) {
-                mockList.map(item => {
-                    if(item.url === response.config.url){
-                        onlineServers.push(item)
-                    }
-                })
-                return response.config.url
+                onlineServerResult = onlineServerResult.priority < priority ?
+                    onlineServerResult : item
             }
         })
     }
-    
-    if(onlineServers.length === 0){
-        return console.error("No servers are online.")
+
+    if (!onlineServerResult.url) {
+        throw new Error("No servers are online.") 
     }
-    else{
-        onlineServers.sort(function (a, b){
-            return a.priority - b.priority
-        })
-        return console.log(onlineServers[0])
-    }
+
+    console.log(onlineServerResult)
+    return onlineServerResult
 }
 
-module.exports = {
-    findServer
-}
+module.exports = findServer
 
 findServer()
