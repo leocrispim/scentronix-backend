@@ -15,8 +15,7 @@
     "@types/jest": "^25.2.3",
     "axios": "^0.21.1",
     "jest": "^26.0.1",
-    "ts-jest": "^26.1.0",
-    "typescript": "^3.9.2"
+    "ts-jest": "^26.1.0"
   },
   "devDependencies": {
     "ts-node-dev": "^1.0.0-pre.44"
