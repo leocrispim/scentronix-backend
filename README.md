@@ -82,7 +82,7 @@ Create a node module that can assess a list of webservers and then returns a ser
 * Jest
 
 ### What are the project's functionalities? :checkered_flag:
-:trophy: Simulate a node module that attempts to connect to multiple servers and return the server with the lowest priority.
+:trophy: Simulate a node module that attempts to connect to multiple servers to return the server with the lowest priority.
 <br>
 ### Languages and Libs :books:
 - [Axios](https://www.npmjs.com/package/axios): version 0.21.1
